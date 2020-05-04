@@ -170,6 +170,7 @@ def format_integer(index, key, value):
 
 
 def format_bool(index, key, value):
+    boolean = False
     value = value.lower()
     if value == 'true':
         boolean = True
