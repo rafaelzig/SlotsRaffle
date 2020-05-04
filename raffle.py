@@ -27,7 +27,7 @@ def touch(filename):
               type=click.Path(exists=True))
 @click.option('--delimiter',
               help='delimiter used in input and output files',
-              default='\t',
+              default='tab',
               type=click.Choice(['comma', 'tab'],
                                 case_sensitive=False))
 def main(directory, delimiter):
