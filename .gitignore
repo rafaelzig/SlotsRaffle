@@ -138,4 +138,5 @@ dmypy.json
 /httpRequests/
 /.idea/
 
-/input/output.txt
+/input/output.tsv
+/input/output.csv
