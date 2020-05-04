@@ -1,11 +1,9 @@
-import click
 import csv
 import os
 from collections import OrderedDict
-from itertools import chain
-from random import randrange
-from random import shuffle
-from sys import exit
+from random import shuffle, randrange
+
+import click
 
 RESIDENTS_FILENAME = 'residents.csv'
 RESIDENTS_FIELDS = ('id', 'slots', 'disabled', 'elderly', 'defaulting')
