@@ -16,7 +16,7 @@ OUTPUT_FILENAME = {COMMA_DELIMITER: 'output.csv', TAB_DELIMITER: 'output.tsv'}
 
 @click.command()
 @click.option('--directory',
-              help='Path of the directory containing the files',
+              help='Path of the directory containing the input files',
               default='input',
               type=click.Path(exists=True))
 @click.option('--delimiter',
