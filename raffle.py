@@ -15,12 +15,6 @@ OUTPUT_FILENAME = {COMMA_DELIMITER: 'output.csv', TAB_DELIMITER: 'output.tsv'}
 
 
 @click.command()
-def touch(filename):
-    """Print FILENAME if the file exists."""
-    click.echo(click.format_filename(filename))
-
-
-@click.command()
 @click.option('--directory',
               help='Path of the directory containing the files',
               default='input',
