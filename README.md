@@ -1,1 +1,1 @@
-# slots-raffle
+# SlotsRaffle
