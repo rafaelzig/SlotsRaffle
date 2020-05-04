@@ -158,6 +158,7 @@ def format_id(index, key, value):
 
 
 def format_integer(index, key, value):
+    integer = 0
     try:
         integer = int(value)
     except ValueError:
