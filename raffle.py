@@ -34,13 +34,13 @@ def read_input(directory):
     check_file(slots_file_name)
 
     residents = {}
-    with open(residents_file_name, 'r') as file:
+    with open(residents_file_name, mode='r', newline='') as file:
         for index, resident in enumerate(csv.DictReader(file, RESIDENTS_FIELDS)):
             format_resident(resident, index)
             residents[resident[RESIDENTS_FIELDS[0]]] = resident
 
     slots = {}
-    with open(slots_file_name, 'r') as file:
+    with open(slots_file_name, mode='r', newline='') as file:
         for index, slot in enumerate(csv.DictReader(file, SLOTS_FIELDS)):
             format_slots(slot, index)
             slots[slot[RESIDENTS_FIELDS[0]]] = slot
@@ -161,7 +161,7 @@ def format_bool(index, key, value):
 
 def write_output(directory, output):
     output_file_name = directory + os.path.sep + OUTPUT_FILENAME
-    with open(output_file_name, 'w') as file:
+    with open(output_file_name, mode='w', newline='') as file:
         writer = csv.writer(file)
         for key, value in output.items():
             writer.writerow([key] + value)
