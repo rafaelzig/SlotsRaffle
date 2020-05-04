@@ -37,22 +37,8 @@ def read_input(directory, delimiter):
     slots_file_name = directory + os.path.sep + SLOTS_FILENAME[delimiter]
     check_file(residents_file_name)
     check_file(slots_file_name)
-
-    residents = {}
-    with open(residents_file_name, mode='r', newline='') as file:
-        reader = csv.DictReader(file, fieldnames=RESIDENTS_FIELDS,
-                                delimiter=delimiter)
-        for index, resident in enumerate(reader):
-            format_resident(resident, index)
-            residents[resident[RESIDENTS_FIELDS[0]]] = resident
-
-    slots = {}
-    with open(slots_file_name, mode='r', newline='') as file:
-        dict_reader = csv.DictReader(file, fieldnames=SLOTS_FIELDS,
-                                     delimiter=delimiter)
-        for index, slot in enumerate(dict_reader):
-            format_slots(slot, index)
-            slots[slot[RESIDENTS_FIELDS[0]]] = slot
+    residents = parse_file(residents_file_name, RESIDENTS_FIELDS, delimiter, format_resident, RESIDENTS_FIELDS[0])
+    slots = parse_file(slots_file_name, SLOTS_FIELDS, delimiter, format_slots, SLOTS_FIELDS[0])
 
     if len(slots) < len(residents):
         click.echo(
@@ -65,6 +51,20 @@ def read_input(directory, delimiter):
     return OrderedDict(residents), slots
 
 
+def parse_file(file_name, fieldnames, delimiter, format_function, id_key):
+    parsed = {}
+    with open(file_name, mode='r', newline='') as file:
+        reader = csv.DictReader(file, fieldnames=fieldnames, delimiter=delimiter)
+        for index, line in enumerate(reader):
+            format_function(index, line)
+            id_value = line[id_key]
+            if id_value in parsed:
+                click.echo('Duplicated id %s in file %s line %d' % (id_value, file_name, index + 1))
+                exit(1)
+            parsed[id_value] = line
+    return parsed
+
+
 def check_file(file_name):
     if not os.path.isfile(file_name):
         click.echo(file_name + ' must exist')
@@ -74,7 +74,7 @@ def check_file(file_name):
         exit(1)
 
 
-def format_resident(resident, index):
+def format_resident(index, resident):
     for key, value in resident.items():
         # Check if values are not missing or empty
         if value is None:
@@ -92,7 +92,7 @@ def format_resident(resident, index):
             resident[key] = format_bool(index, key, value)
 
 
-def format_slots(slot, index):
+def format_slots(index, slot):
     for key, value in slot.items():
         # Check if values are not missing or empty
         if value is None:
